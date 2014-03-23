@@ -24,13 +24,14 @@ public class DFS implements Callable<List<Integer>> {
     }
 
     private void visitDFS(final int node, final Set<Integer> visited, final List<Integer> visitOrder) {
-        if(visited.contains(node)) {
-            return;
-        }
 
         visited.add(node);
         visitOrder.add(node);
         for(final AdjacencyList.EdgeNode edgeNode: graph.getEdges(node)) {
+            if(visited.contains(edgeNode.getLabel())){
+                continue;
+            }
+            System.out.println("Visit: " + edgeNode.getLabel());
             visitDFS(edgeNode.getLabel(),visited, visitOrder);
         }
     }

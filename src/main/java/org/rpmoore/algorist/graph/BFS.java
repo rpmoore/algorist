@@ -13,6 +13,7 @@ public class BFS implements Callable<List<Integer>> {
         this.startNode = startNode;
     }
 
+    /*
     @Override
     public List<Integer> call() throws Exception {
         final Queue<Integer> visitQueue = new LinkedList<>();
@@ -40,6 +41,43 @@ public class BFS implements Callable<List<Integer>> {
         for(final AdjacencyList.EdgeNode edgeNode: newEdges) {
             if(!visited.contains(edgeNode.getLabel())) {
                 visitQueue.offer(edgeNode.getLabel());
+            }
+        }
+    }
+    */
+
+    @Override
+    public List<Integer> call() throws Exception {
+        final Queue<AdjacencyList.EdgeNode> visitQueue = new LinkedList<>();
+        final Set<Integer> visited = new HashSet<>();
+        final List<Integer> visitOrder = new ArrayList<>();
+
+        final List<AdjacencyList.EdgeNode> edges = graph.getEdges(startNode);
+        addToQueue(edges, visitQueue, visited);
+        visited.add(startNode);
+        visitOrder.add(startNode);
+
+        while(!visitQueue.isEmpty()) {
+            visitDFS(visitQueue.poll().getLabel(), visitQueue, visited, visitOrder);
+        }
+
+        return visitOrder;
+    }
+
+    private void visitDFS(final int node, final Queue<AdjacencyList.EdgeNode> visitQueue, final Set<Integer> visited, final List<Integer> visitOrder) {
+        if(visited.contains(node)) {
+            return;
+        }
+        final List<AdjacencyList.EdgeNode> edges = graph.getEdges(node);
+        addToQueue(edges, visitQueue, visited);
+        visited.add(node);
+        visitOrder.add(node);
+    }
+
+    private void addToQueue(final List<AdjacencyList.EdgeNode> newEdges, final Queue<AdjacencyList.EdgeNode> visitQueue, final Set<Integer> visited ) {
+        for(final AdjacencyList.EdgeNode edgeNode: newEdges) {
+            if(!visited.contains(edgeNode.getLabel())) {
+                visitQueue.offer(edgeNode);
             }
         }
     }

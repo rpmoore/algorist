@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AdjacencyList {
-    public class EdgeNode {
+    public class EdgeNode implements Comparable<EdgeNode> {
         private final int weight;
         private final int label;
 
@@ -20,6 +20,11 @@ public class AdjacencyList {
 
         public int getWeight() {
             return weight;
+        }
+
+        @Override
+        public int compareTo(EdgeNode o) {
+            return Integer.compare(this.getWeight(), o.getWeight());
         }
     }
 
