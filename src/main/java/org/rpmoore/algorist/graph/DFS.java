@@ -15,10 +15,10 @@ public class DFS implements Callable<List<Integer>> {
 
     @Override
     public List<Integer> call() throws Exception {
-        final Set<Integer> visiited = new HashSet<>();
+        final Set<Integer> visited = new HashSet<>();
         final List<Integer> visitOrder = new ArrayList<>();
 
-        visitDFS(startNode, visiited, visitOrder);
+        visitDFS(startNode, visited, visitOrder);
 
         return visitOrder;
     }
